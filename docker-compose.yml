@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: postgres
+    volumes:
+    - ./src/create-database.sql:/docker-entrypoint-initdb.d/create-database.sql
+    - ./src/create-tables.sql:/docker-entrypoint-initdb.d/create-tables.sql
+    - ./src/insert-records.sql:/docker-entrypoint-initdb.d/insert-records.sql
+    - ./src/query-database.sql:/docker-entrypoint-initdb.d/query-database.sql
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
